@@ -5,7 +5,13 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Creators as AlbumsActions } from 'store/ducks/albums';
 
-import { FlatList, StatusBar, TouchableOpacity, View } from 'react-native';
+import {
+  ActivityIndicator,
+  FlatList,
+  StatusBar,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { colors } from 'styles';
@@ -34,6 +40,7 @@ class Main extends Component {
       data: PropTypes.arrayOf(PropTypes.shape({
         id: PropTypes.number.isRequired,
       })).isRequired,
+      loading: PropTypes.bool,
     }).isRequired,
   };
 
@@ -46,16 +53,20 @@ class Main extends Component {
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
 
-        <FlatList
-          data={this.props.albums.data}
-          keyExtractor={album => String(album.id)}
-          renderItem={({ item }) => (
-            <AlbumItem
-              album={item}
-              onPress={() => this.props.navigation.navigate('Album', { album: item })}
+        {this.props.albums.loading
+          ? <ActivityIndicator size="small" color={colors.regular} style={styles.loading} />
+          : (
+            <FlatList
+              data={this.props.albums.data}
+              keyExtractor={album => String(album.id)}
+              renderItem={({ item }) => (
+                <AlbumItem
+                  album={item}
+                  onPress={() => this.props.navigation.navigate('Album', { album: item })}
+                />
+              )}
             />
           )}
-        />
       </View>
     );
   }
