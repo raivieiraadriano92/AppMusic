@@ -9,6 +9,7 @@
     "postinstall": "rm ./node_modules/react-native/local-cli/core/__fixtures__/files/package.json"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "eslint": "^4.19.1",
     "global": "^4.3.2",
     "prop-types": "^15.6.1",
